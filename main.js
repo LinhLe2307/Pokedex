@@ -11,7 +11,6 @@ const fetchData = () => {
         return fetch(p.url).then((res) => res.json());
       });
       Promise.all(fetches).then((res) => {
-        // console.log(res);
         pokeCards(res);
       });
     });
@@ -21,27 +20,19 @@ const fetchType = (data) => {
   return data.types.map((i) => i.type.name);
 };
 
-const appendType = (card) => {
-  if (fetchType(card).length === 1) {
-    return fetchType(card)[0];
-  } else {
-    return fetchType(card)
-      .map((item) => item)
-      .join(" - ");
-  }
-};
-
 const pokeCards = (data) => {
   const cards = data
     .map((card) => {
+      const appendType = fetchType(card)
+        .map((item) => item)
+        .join(" - ");
+
       return `
     <div class="card">
-    <img src="${card.sprites.other.dream_world.front_default}" alt=${
-        card.name
-      }/>
+    <img src="${card.sprites.other.dream_world.front_default}" alt=${card.name}/>
     <div class="card-name">
     <h2>${card.name}</h2>
-    <p>${appendType(card)}</p>
+    <p>${appendType}</p>
     </div>
     </div>`;
     })
