@@ -5,21 +5,46 @@
 }
 
 :root {
-  --bg: linear-gradient(#a984d1, #ddaee3);
+  --bg: url(https://images.unsplash.com/photo-1552083375-1447ce886485?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80);
 }
 
 body {
   background: var(--bg) no-repeat fixed;
   font-family: "Raleway", sans-serif;
-  color: black;
-  display: flex;
-  flex-direction: column;
+  color: rgb(255, 255, 255);
 }
 
-.container {
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2rem;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(#a984d1, #ddaee3);
+  left: 0;
+  z-index: 1;
+}
+
+header input {
+  width: 20rem;
+  padding: 0 1rem;
+  border-radius: 15px;
+  border-style: none;
+}
+
+main > h1 {
+  text-align: center;
+  margin: 2rem;
+}
+
+.pokedex {
+  max-width: 1200px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 2rem;
+  gap: 1rem;
+  max-width: 90vw;
+  margin: 0 auto;
 }
 
 .card {
@@ -27,14 +52,67 @@ body {
   min-height: 250px;
   border-radius: 5px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: 0px 0px 5px #333;
+}
+
+.card:hover {
+  box-shadow: 0px 0px 10px #333;
+}
+
+.card img {
+  filter: sepia(40);
+  width: 100%;
+  height: 10rem;
+}
+
+.card:hover img {
+  filter: sepia(0);
 }
 
 .card-name {
-  background-color: rgb(214, 150, 150);
+  background-color: #f5cdff;
   text-align: center;
-  align-self: flex-end;
   width: 100%;
   height: 4rem;
   border-radius: 0px 0px 5px 5px;
+  color: rgb(0, 0, 0);
+}
+
+.card p {
+  color: rgb(0, 0, 0);
+}
+#backToTop {
+  position: fixed;
+  /* display: none; */
+  bottom: 2rem;
+  right: 2rem;
+  width: 4rem;
+  height: 4rem;
+  background: url("https://img.icons8.com/nolan/344/circled-up--v2.png");
+  background-size: cover;
+  border-radius: 50%;
+  border-style: none;
+}
+
+#backToTop:hover,
+.btn_submit:hover {
+  background-color: #405de6;
+}
+
+@media (max-width: 1200px) {
+  .pokedex {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 975px) {
+  .pokedex {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 575px) {
+  .pokedex {
+    grid-template-columns: 1fr;
+  }
 }
