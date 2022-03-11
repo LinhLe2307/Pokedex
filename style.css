@@ -83,6 +83,15 @@ main > h1 {
 .card p {
   color: rgb(0, 0, 0);
 }
+
+select {
+  width: 5rem;
+  height: 2rem;
+  border-radius: 15px;
+  border-style: none;
+  padding-left: 0.5rem;
+}
+
 #backToTop {
   position: fixed;
   /* display: none; */

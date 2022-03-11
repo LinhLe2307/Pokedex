@@ -2,7 +2,7 @@ const pokedex = document.querySelector(".pokedex");
 const header = document.querySelector(".header");
 const getToTopBtn = document.querySelector("#backToTop");
 const searchName = document.querySelector("#search-name");
-
+const filter = document.querySelector("#filter");
 const fetchData = () => {
   fetch("https://pokeapi.co/api/v2/pokemon?offset=0&limit=50")
     .then((res) => res.json())
@@ -17,7 +17,9 @@ const fetchData = () => {
 };
 
 const fetchType = (data) => {
-  return data.types.map((i) => i.type.name);
+  return data.types.map((i) => {
+    return i.type.name;
+  });
 };
 
 const pokeCards = (data) => {
@@ -31,8 +33,8 @@ const pokeCards = (data) => {
     <div class="card">
     <img src="${card.sprites.other.dream_world.front_default}" alt=${card.name}/>
     <div class="card-name">
-    <h2>${card.name}</h2>
-    <p>${appendType}</p>
+    <h2 class="card-title">${card.name}</h2>
+    <p class="card-type">${appendType}</p>
     </div>
     </div>`;
     })
@@ -41,12 +43,25 @@ const pokeCards = (data) => {
 };
 
 const searchPokemon = (e) => {
-  const cardNames = document.querySelectorAll(".card-name");
+  const cardTitles = document.querySelectorAll(".card-title");
   const card = document.querySelectorAll(".card");
-  const userInput = e.target.value.toLowerCase();
+  const userInput = e.target.value.trim().toLowerCase();
 
-  [...cardNames].forEach((cardName, i) => {
-    if (cardName.textContent.toLowerCase().indexOf(userInput) != -1) {
+  cardTitles.forEach((cardTitle, i) => {
+    if (cardTitle.textContent.toLowerCase().indexOf(userInput) != -1) {
+      card[i].style.display = "flex";
+    } else {
+      card[i].style.display = "none";
+    }
+  });
+  console.log(card);
+};
+
+const filterChars = (e) => {
+  const cardTypes = document.querySelectorAll(".card-type");
+  const card = document.querySelectorAll(".card");
+  cardTypes.forEach((cardType, i) => {
+    if (cardType.textContent.indexOf(e.target.value) != -1) {
       card[i].style.display = "flex";
     } else {
       card[i].style.display = "none";
@@ -74,7 +89,7 @@ const getToTop = () => {
 fetchData();
 searchName.addEventListener("change", searchPokemon);
 getToTopBtn.addEventListener("click", getToTop);
-
+filter.addEventListener("change", filterChars);
 
 // class fetchWrapper {
 //   constructor(baseURL) {
@@ -87,7 +102,7 @@ getToTopBtn.addEventListener("click", getToTop);
 
 // function fetchData() {
 //   const pokemon = new fetchWrapper("https://pokeapi.co/api/v2/pokemon");
-//   const container = document.querySelector(".container");
+//   const container = document.querySelector(".pokedex");
 //   pokemon.get("?offset=0&limit=50").then((data) => {
 //     data.results.map((item) => {
 //       const cardTitle = document.createElement("h2");
