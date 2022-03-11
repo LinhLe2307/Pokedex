@@ -8,6 +8,7 @@ const fetchData = () => {
     .then((res) => res.json())
     .then((data) => {
       const fetches = data.results.map((p) => {
+        // console.log("p", p);
         return fetch(p.url).then((res) => res.json());
       });
       Promise.all(fetches).then((res) => {
@@ -16,18 +17,12 @@ const fetchData = () => {
     });
 };
 
-const fetchType = (data) => {
-  return data.types.map((i) => {
-    return i.type.name;
-  });
-};
+const fetchType = (data) => data.types.map((i) => i.type.name);
 
 const pokeCards = (data) => {
   const cards = data
     .map((card) => {
-      const appendType = fetchType(card)
-        .map((item) => item)
-        .join(" - ");
+      const appendType = fetchType(card).join(" - ");
 
       return `
     <div class="card">
